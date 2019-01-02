@@ -15,7 +15,7 @@ public class PlayingRunner{
 
     public void multiPlay() {
         for (Player actor : mPlayers) {
-            String path = RecordingRunner.FILE_PATH+ mFilename + "-" + actor.getClass().getSimpleName() + ".rec";
+            String path = RecordingRunner.FILE_PATH+ mFilename + "-" + actor.getName() + ".rec";
             PlayingTask scriptReader = new PlayingTask(actor,path);
             mExec.submit(scriptReader);
         }

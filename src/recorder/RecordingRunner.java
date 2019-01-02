@@ -8,19 +8,27 @@ public class RecordingRunner {
     private Recorder[] mRecorders;
     private Executer mExec;
 
-    private String mFilename;
-
-    public RecordingRunner(String filename, Recorder... recorders) {
-        this.mFilename = filename;
+    private String mPath;
+    
+    public RecordingRunner(String path, Recorder... recorders) {
+        if(contains(path, '/'))
+        	mPath = path;
+        else
+        	mPath = FILE_PATH + path;
+    	
         this.mRecorders = recorders;
         
         mExec = new Executer();
     }
+    
+    public boolean contains(String str, char chr) {
+    	  return str.indexOf(chr) != -1;
+    	}
 
     public void multiRecord() {
         for(Recorder script : mRecorders) {
             System.out.println("recording actor");
-            String path = FILE_PATH+mFilename+"-"+script.getClass().getSimpleName()+".rec";
+            String path = mPath+"-"+script.getName()+".rec";
             RecordingTask scriptWriter = new RecordingTask(script, path);
             mExec.submit(scriptWriter);
         }
