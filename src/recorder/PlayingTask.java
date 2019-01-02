@@ -12,10 +12,14 @@ public class PlayingTask implements Runnable {
 
     private Player mPlayer;
     private Queue<Frame> mFrames;
+    
+    private int mPeriod;
 
-    public PlayingTask(Player player, String path) {
-        this.mPlayer = player;
+    public PlayingTask(Player player, String path, int period) {
+        mPlayer = player;
+        mPeriod = period;
         mFrames = new ArrayDeque<Frame>();
+        
         readScript(path);
     }
 
@@ -26,7 +30,7 @@ public class PlayingTask implements Runnable {
         	mPlayer.play(frame);
 
             try {
-                Thread.sleep(RecordingRunner.PERIOD - (startTime - FlashUtil.millisInt()));
+                Thread.sleep(mPeriod - (startTime - FlashUtil.millisInt()));
                 startTime = FlashUtil.millisInt();
             } catch (InterruptedException e) {
                 e.printStackTrace();

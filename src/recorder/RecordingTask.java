@@ -10,12 +10,15 @@ import java.util.Queue;
 public class RecordingTask implements Runnable {
 
     private String mPath;
+    private int mPeriod;
+    
     private Recorder mRecorder;
     private Queue<Frame> mFrames;
 
-    public RecordingTask(Recorder recorder,String path) {
+    public RecordingTask(Recorder recorder, String path, int period) {
         mPath = path;
         mRecorder = recorder;
+        mPeriod = period;
         mFrames = new ArrayDeque<Frame>();
     }
 
@@ -26,7 +29,7 @@ public class RecordingTask implements Runnable {
         while(!Thread.interrupted()) {
         	mFrames.add(mRecorder.capture());
             try {
-                Thread.sleep(RecordingRunner.PERIOD - (startTime - FlashUtil.millisInt()));
+                Thread.sleep(mPeriod - (startTime - FlashUtil.millisInt()));
                 startTime = FlashUtil.millisInt();
 
             } catch (InterruptedException e) {

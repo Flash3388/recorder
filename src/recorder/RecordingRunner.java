@@ -9,6 +9,7 @@ public class RecordingRunner {
     private Executer mExec;
 
     private String mPath;
+    private int mPeriod;
     
     public RecordingRunner(String path, Recorder... recorders) {
         if(contains(path, '/'))
@@ -19,6 +20,21 @@ public class RecordingRunner {
         this.mRecorders = recorders;
         
         mExec = new Executer();
+        mPeriod = PERIOD;
+    }
+    
+    public RecordingRunner(String path, int period, Recorder... recorders) {
+        if(contains(path, '/'))
+        	mPath = path;
+        else
+        	mPath = FILE_PATH + path;
+    	
+        this.mRecorders = recorders;
+        
+        mExec = new Executer();
+        if(period <= 0 )
+        	throw new IllegalArgumentException();
+        mPeriod = period;
     }
     
     public boolean contains(String str, char chr) {
@@ -29,7 +45,7 @@ public class RecordingRunner {
         for(Recorder script : mRecorders) {
             System.out.println("recording actor");
             String path = mPath+"-"+script.getName()+".rec";
-            RecordingTask scriptWriter = new RecordingTask(script, path);
+            RecordingTask scriptWriter = new RecordingTask(script, path, mPeriod);
             mExec.submit(scriptWriter);
         }
     }
