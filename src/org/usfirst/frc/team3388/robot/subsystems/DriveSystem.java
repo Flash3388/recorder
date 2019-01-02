@@ -45,7 +45,7 @@ public class DriveSystem extends Subsystem implements TankDriveSystem,Recorder,P
 
 	@Override
 	public void play(Frame frame) {
-		String val = frame.getData();
-		tankDrive(Double.parseDouble(val.split(",")[1]), Double.parseDouble(val.split(",")[0]));
+		String[] val = frame.getData().split(",");
+		tankDrive(Double.parseDouble(val[1]), Double.parseDouble(val[0]));
 	}
 }
