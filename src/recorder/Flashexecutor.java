@@ -6,11 +6,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class Executer {
+public class Flashexecutor {
 	private ExecutorService mExecutorService;
 	private List<Future<?>> mFutures;
     
-    public Executer() {
+    public Flashexecutor() {
     	mExecutorService = Executors.newSingleThreadExecutor();
         mFutures = new ArrayList<>();
     }

@@ -18,9 +18,7 @@ public class PlayingTask implements Runnable {
     public PlayingTask(Player player, String path, int period) {
         mPlayer = player;
         mPeriod = period;
-        mFrames = new ArrayDeque<Frame>();
-        
-        readScript(path);
+        mFrames = loadFrames(path);
     }
 
     @Override
@@ -39,15 +37,17 @@ public class PlayingTask implements Runnable {
         }
     }
 
-    private void readScript(String path) {
-        mFrames.clear();
+    private Queue<Frame> loadFrames(String path) {
+        Queue<Frame> frames = new ArrayDeque<Frame>();
         
         try(BufferedReader file = new BufferedReader(new FileReader(path))) {
         	for(String line = file.readLine(); line != null; line = file.readLine()) {
-            	mFrames.add(new Frame(line));
+            	frames.add(new Frame(line));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        return frames;
     }
 }

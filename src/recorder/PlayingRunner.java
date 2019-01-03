@@ -3,39 +3,39 @@ package recorder;
 public class PlayingRunner{
 
 	private Player[] mPlayers;
-	private String mFilename;
-	private Executer mExec;
-	private int mPeriod;
+	private Flashexecutor mExecutor;
+	private String mOutputPath;
+	private int mPeriodMs;
 	
-	public PlayingRunner(String filename, Player... players) {
+	public PlayingRunner(String outputPath, Player... players) {
         mPlayers = players;
-        mFilename = filename;
-        mPeriod = RecordingRunner.PERIOD;
+        mOutputPath = outputPath;
+        mPeriodMs = RecordingRunner.DEFAULT_PERIOD_MS;
         
-        mExec = new Executer();
+        mExecutor = new Flashexecutor();
     }
 	
-    public PlayingRunner(String filename, int period, Player... players) {
+    public PlayingRunner(String outputPath, int period, Player... players) {
         mPlayers = players;
-        mFilename = filename;
-        mPeriod = period; // The period here and in Recorder must be the same to achieve accurate results
+        mOutputPath = outputPath;
+        mPeriodMs = period; // The period here and in Recorder must be the same to achieve accurate results
         
-        mExec = new Executer();
+        mExecutor = new Flashexecutor();
     }
 
     public void multiPlay() {
         for (Player actor : mPlayers) {
-            String path = RecordingRunner.FILE_PATH+ mFilename + "-" + actor.getName() + ".rec";
-            PlayingTask scriptReader = new PlayingTask(actor, path, mPeriod);
-            mExec.submit(scriptReader);
+            String path = String.format("%s-%s.rec", mOutputPath,actor.getName());
+            PlayingTask scriptReader = new PlayingTask(actor, path, mPeriodMs);
+            mExecutor.submit(scriptReader);
         }
     }
     
     public boolean isFinished() {
-    	return mExec.isFinished();
+    	return mExecutor.isFinished();
     }
     
     public void stop() {
-    	mExec.stop();
+    	mExecutor.stop();
     }
 }

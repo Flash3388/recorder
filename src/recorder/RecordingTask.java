@@ -33,19 +33,17 @@ public class RecordingTask implements Runnable {
                 startTime = FlashUtil.millisInt();
 
             } catch (InterruptedException e) {
-                System.out.println("interraped");
                 break;
             }
         }
-        System.out.println("tofile shit bitch face");
-        toFile(mPath);
+        saveFrames(mPath, mFrames);
     }
 
-    private void toFile(String path) {
+    private void saveFrames(String path, Queue<Frame> frames) {
         try {
             FileWriter writer = new FileWriter(path);
             try {
-                for(Frame frame : mFrames) {
+                for(Frame frame : frames) {
                     writer.write(frame.getData());
                     writer.write("\n");
                 }
@@ -55,6 +53,5 @@ public class RecordingTask implements Runnable {
         } catch (IOException e) {
         	e.printStackTrace();
         }
-        mFrames.clear();
     }
 }
