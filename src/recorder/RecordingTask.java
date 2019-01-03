@@ -9,34 +9,34 @@ import java.util.Queue;
 
 public class RecordingTask implements Runnable {
 
-    private String mPath;
-    private int mPeriod;
+    private String mOutputPath;
+    private int mPeriodMs;
     
     private Recorder mRecorder;
-    private Queue<Frame> mFrames;
 
-    public RecordingTask(Recorder recorder, String path, int period) {
-        mPath = path;
+    public RecordingTask(Recorder recorder, String outputPath, int period) {
+        mOutputPath = outputPath;
         mRecorder = recorder;
-        mPeriod = period;
-        mFrames = new ArrayDeque<Frame>();
+        mPeriodMs = period;
     }
 
     @Override
     public void run() {
-        long startTime = FlashUtil.millisInt();
+    	Queue<Frame> mFrames = new ArrayDeque<Frame>();
+    	long startTime = FlashUtil.millisInt();
 
+        
         while(!Thread.interrupted()) {
         	mFrames.add(mRecorder.capture());
             try {
-                Thread.sleep(mPeriod - (startTime - FlashUtil.millisInt()));
+                Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
                 startTime = FlashUtil.millisInt();
 
             } catch (InterruptedException e) {
                 break;
             }
         }
-        saveFrames(mPath, mFrames);
+        saveFrames(mOutputPath, mFrames);
     }
 
     private void saveFrames(String path, Queue<Frame> frames) {

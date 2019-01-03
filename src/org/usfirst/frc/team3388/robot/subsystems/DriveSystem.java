@@ -40,7 +40,7 @@ public class DriveSystem extends Subsystem implements TankDriveSystem,Recorder,P
 
     @Override
     public Frame capture() {
-        return new Frame(Double.toHexString(fr.getMotorOutputPercent())+","+Double.toHexString(fl.getMotorOutputPercent()));
+        return new Frame(String.format("%s,%s", Double.toHexString(fr.getMotorOutputPercent()),Double.toHexString(fl.getMotorOutputPercent())));
     }
 
 	@Override

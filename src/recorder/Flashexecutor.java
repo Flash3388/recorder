@@ -11,7 +11,7 @@ public class Flashexecutor {
 	private List<Future<?>> mFutures;
     
     public Flashexecutor() {
-    	mExecutorService = Executors.newSingleThreadExecutor();
+    	mExecutorService = Executors.newCachedThreadPool();
         mFutures = new ArrayList<>();
     }
     

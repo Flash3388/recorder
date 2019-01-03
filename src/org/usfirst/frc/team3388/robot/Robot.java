@@ -38,7 +38,7 @@ public class Robot extends IterativeFRCRobot {
 			protected void execute() {
 				shouldrec = !shouldrec;
     			if(shouldrec)
-    				rec.multiRecord();
+    				rec.record();
     			else
     				rec.stop();
 			}
@@ -47,7 +47,7 @@ public class Robot extends IterativeFRCRobot {
     	xbox.X.whenPressed(new InstantAction() {
 			@Override
 			protected void execute() {
-    			player.multiPlay();
+    			player.play();
     		}
 		});
     }

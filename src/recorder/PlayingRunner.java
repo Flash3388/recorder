@@ -1,29 +1,28 @@
 package recorder;
 
 public class PlayingRunner{
-
-	private Player[] mPlayers;
+	private final int DEFAULT_PERIOD_MS = 10;
+	
 	private Flashexecutor mExecutor;
 	private String mOutputPath;
+	
+	private Player[] mPlayers;
 	private int mPeriodMs;
 	
 	public PlayingRunner(String outputPath, Player... players) {
         mPlayers = players;
         mOutputPath = outputPath;
-        mPeriodMs = RecordingRunner.DEFAULT_PERIOD_MS;
+        mPeriodMs = DEFAULT_PERIOD_MS;
         
         mExecutor = new Flashexecutor();
     }
 	
     public PlayingRunner(String outputPath, int period, Player... players) {
-        mPlayers = players;
-        mOutputPath = outputPath;
+        this(outputPath,players);
         mPeriodMs = period; // The period here and in Recorder must be the same to achieve accurate results
-        
-        mExecutor = new Flashexecutor();
     }
 
-    public void multiPlay() {
+    public void play() {
         for (Player actor : mPlayers) {
             String path = String.format("%s-%s.rec", mOutputPath,actor.getName());
             PlayingTask scriptReader = new PlayingTask(actor, path, mPeriodMs);

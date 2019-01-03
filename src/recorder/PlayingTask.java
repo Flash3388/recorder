@@ -11,24 +11,26 @@ import java.util.Queue;
 public class PlayingTask implements Runnable {
 
     private Player mPlayer;
-    private Queue<Frame> mFrames;
+    private String mOutputPath;
     
-    private int mPeriod;
+    private int mPeriodMs;
 
-    public PlayingTask(Player player, String path, int period) {
+    public PlayingTask(Player player, String outputPath, int period) {
         mPlayer = player;
-        mPeriod = period;
-        mFrames = loadFrames(path);
+        mPeriodMs = period;
+        mOutputPath = outputPath;
     }
 
     @Override
     public void run() {
+    	Queue<Frame> mFrames = loadFrames(mOutputPath);
         long startTime = FlashUtil.millisInt();
+        
         for(Frame frame : mFrames) {
         	mPlayer.play(frame);
 
             try {
-                Thread.sleep(mPeriod - (startTime - FlashUtil.millisInt()));
+                Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
                 startTime = FlashUtil.millisInt();
             } catch (InterruptedException e) {
                 e.printStackTrace();
