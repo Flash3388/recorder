@@ -1,25 +1,23 @@
 package recorder;
 
 public class PlayingRunner{
-	private final int DEFAULT_PERIOD_MS = 10;
+	private final static int DEFAULT_PERIOD_MS = 10;
 	
-	private Flashexecutor mExecutor;
+	private Executor mExecutor;
 	private String mOutputPath;
 	
 	private Player[] mPlayers;
 	private int mPeriodMs;
 	
 	public PlayingRunner(String outputPath, Player... players) {
-        mPlayers = players;
-        mOutputPath = outputPath;
-        mPeriodMs = DEFAULT_PERIOD_MS;
-        
-        mExecutor = new Flashexecutor();
+		this(outputPath,DEFAULT_PERIOD_MS,players);
     }
 	
-    public PlayingRunner(String outputPath, int period, Player... players) {
-        this(outputPath,players);
-        mPeriodMs = period; // The period here and in Recorder must be the same to achieve accurate results
+    public PlayingRunner(String outputPath, int period, Player... players) {    
+        mPlayers = players;
+        mOutputPath = outputPath;
+        mPeriodMs = period;
+        mExecutor = new Executor();
     }
 
     public void play() {

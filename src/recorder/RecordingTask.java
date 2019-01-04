@@ -22,12 +22,12 @@ public class RecordingTask implements Runnable {
 
     @Override
     public void run() {
-    	Queue<Frame> mFrames = new ArrayDeque<Frame>();
+    	Queue<Frame> frames = new ArrayDeque<Frame>();
     	long startTime = FlashUtil.millisInt();
 
         
         while(!Thread.interrupted()) {
-        	mFrames.add(mRecorder.capture());
+        	frames.add(mRecorder.capture());
             try {
                 Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
                 startTime = FlashUtil.millisInt();
@@ -36,7 +36,7 @@ public class RecordingTask implements Runnable {
                 break;
             }
         }
-        saveFrames(mOutputPath, mFrames);
+        saveFrames(mOutputPath, frames);
     }
 
     private void saveFrames(String path, Queue<Frame> frames) {

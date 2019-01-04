@@ -3,27 +3,27 @@ package recorder;
 public class RecordingRunner {
 
 	public static final String FILE_PATH = "/home/lvuser/recorder/";
-	private final int DEFAULT_PERIOD_MS = 10;
+	private final static int DEFAULT_PERIOD_MS = 10;
 	
     private Recorder[] mRecorders;
-    private Flashexecutor mExecutor;
+    private Executor mExecutor;
 
     private String mOutputPath;
     private int mPeriodMs;
     
     public RecordingRunner(String fullPath, Recorder... recorders) {
-        mOutputPath = fullPath;
-        mRecorders = recorders;
-        mExecutor = new Flashexecutor();
-        mPeriodMs = DEFAULT_PERIOD_MS;
+        this(fullPath,DEFAULT_PERIOD_MS,recorders);
     }
     
     public RecordingRunner(String fullPath, int periodMs, Recorder... recorders) {
-    	this(fullPath,recorders);
     	if(periodMs <= 0 )
     		throw new IllegalArgumentException();        
        
+    	mOutputPath = fullPath;
+        mRecorders = recorders;
     	mPeriodMs = periodMs;
+    	
+    	mExecutor = new Executor();
     }
 
     public void record() {
