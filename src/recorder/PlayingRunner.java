@@ -13,6 +13,12 @@ public class PlayingRunner{
 		this(outputPath,DEFAULT_PERIOD_MS,players);
     }
 	
+	/**
+	 * 
+	 * @param outputPath
+	 * @param period Has to be equal to the period set in Recorder for the autonomous to work
+	 * @param players
+	 */
     public PlayingRunner(String outputPath, int period, Player... players) {    
         mPlayers = players;
         mOutputPath = outputPath;
