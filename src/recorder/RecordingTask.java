@@ -2,22 +2,26 @@ package recorder;
 
 import edu.flash3388.flashlib.util.FlashUtil;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.logging.Logger;
 
 public class RecordingTask implements Runnable {
 
     private String mOutputPath;
-    private int mPeriodMs;
+    private Logger mLogger;
     
+    private int mPeriodMs;
     private Recorder mRecorder;
 
-    public RecordingTask(Recorder recorder, String outputPath, int period) {
+    public RecordingTask(Recorder recorder, String outputPath, int period, Logger logger) {
         mOutputPath = outputPath;
         mRecorder = recorder;
         mPeriodMs = period;
+        mLogger = logger;
     }
 
     @Override
@@ -40,8 +44,10 @@ public class RecordingTask implements Runnable {
     }
 
     private void saveFrames(String path, Queue<Frame> frames) {
-        try {
-            FileWriter writer = new FileWriter(path);
+    	FileWriter writer;
+    	
+    	try {
+    		writer = new FileWriter(path);
             try {
                 for(Frame frame : frames) {
                     writer.write(frame.getData());
@@ -51,7 +57,9 @@ public class RecordingTask implements Runnable {
                 writer.close();
             }
         } catch (IOException e) {
-        	e.printStackTrace();
+        	mLogger.warning(e.toString());
+        	File file = new File(path);
+        	file.delete();
         }
     }
 }

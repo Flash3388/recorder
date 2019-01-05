@@ -7,18 +7,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.logging.Logger;
 
 public class PlayingTask implements Runnable {
-
-    private Player mPlayer;
     private String mInputPath;
+    private Logger mLogger;
     
+    private Player mPlayer;
     private int mPeriodMs;
 
-    public PlayingTask(Player player, String outputPath, int period) {
+    public PlayingTask(Player player, String outputPath, int period, Logger logger) {
         mPlayer = player;
         mPeriodMs = period;
         mInputPath = outputPath;
+        mLogger = logger;
     }
 
     @Override
@@ -26,15 +28,17 @@ public class PlayingTask implements Runnable {
     	Queue<Frame> frames = loadFrames(mInputPath);
         long startTime = FlashUtil.millisInt();
         
-        for(Frame frame : frames) {
-        	mPlayer.play(frame);
+        if(frames != null) {
+        	for(Frame frame : frames) {
+            	mPlayer.play(frame);
 
-            try {
-                Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
-                startTime = FlashUtil.millisInt();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                break;
+                try {
+                    Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
+                    startTime = FlashUtil.millisInt();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    break;
+                }
             }
         }
     }
@@ -47,9 +51,10 @@ public class PlayingTask implements Runnable {
             	frames.add(new Frame(line));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+        	mLogger.warning(e.toString());   
+        	PlayingRunner.stop();
+        	return null;
         }
-        
         return frames;
     }
 }
