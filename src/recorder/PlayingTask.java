@@ -51,7 +51,10 @@ public class PlayingTask implements Runnable {
             	frames.add(new Frame(line));
             }
         } catch (IOException e) {
-        	mLogger.warning(e.toString());   
+        	if(mLogger.equals(null))
+        		System.out.println(e.toString());
+        	else
+        		mLogger.warning(e.toString());   
         	PlayingRunner.stop();
         	return null;
         }

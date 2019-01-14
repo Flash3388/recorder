@@ -21,9 +21,13 @@ public class PlayingRunner{
         mLogger = logger;
         mExecutor = new Executor();
     }
+    
+    public PlayingRunner(int period, Player... players) {    
+        this(null,period,players);
+    }
 
     public void play(String inputFolderPath) {
-    	if(IDunnoHowToNameIT.isDir(inputFolderPath) && isFinished()) {
+    	if(RecordUtil.isDir(inputFolderPath) && isFinished()) {
     		for (Player actor : mPlayers) {
                 String path = String.format("%s%s.rec", inputFolderPath,actor.getName());
                 PlayingTask scriptReader = new PlayingTask(actor, path, mPeriodMs, mLogger);

@@ -2,7 +2,7 @@ package recorder;
 
 import java.io.File;
 
-class IDunnoHowToNameIT {
+class RecordUtil {
 	public static boolean isDir(String folderPath) {
     	File folder = new File(folderPath);
     	

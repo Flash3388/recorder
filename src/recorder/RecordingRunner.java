@@ -18,9 +18,13 @@ public class RecordingRunner {
     	mPeriodMs = periodMs;
     	mLogger = logger;
     }
+    
+    public RecordingRunner(int periodMs, Recorder... recorders) {
+    	this(null,periodMs,recorders);
+    }
 
     public void record(String outputFolderPath) {
-    	if(IDunnoHowToNameIT.isDir(outputFolderPath) && isFinished()) {
+    	if(RecordUtil.isDir(outputFolderPath) && isFinished()) {
     		for(Recorder recorder : mRecorders) {
                 String path = String.format("%s%s.rec", outputFolderPath,recorder.getName());
                 RecordingTask scriptWriter = new RecordingTask(recorder, path, mPeriodMs, mLogger);

@@ -57,7 +57,10 @@ public class RecordingTask implements Runnable {
                 writer.close();
             }
         } catch (IOException e) {
-        	mLogger.warning(e.toString());
+        	if(mLogger.equals(null))
+        		System.out.println(e.toString());
+        	else
+        		mLogger.warning(e.toString());
         	File file = new File(path);
         	file.delete();
         }

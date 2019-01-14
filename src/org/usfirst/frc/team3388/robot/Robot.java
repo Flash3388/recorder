@@ -29,8 +29,8 @@ public class Robot extends IterativeFRCRobot {
     	RobotFactory.setHIDInterface(new FRCHIDInterface(DriverStation.getInstance()));
     	
     	drive = new DriveSystem(7,3,6,1);
-    	rec = new RecordingRunner("test",drive);
-    	player = new PlayingRunner("test",drive);
+    	rec = new RecordingRunner(10,drive);
+    	player = new PlayingRunner(10,drive);
     	xbox = new XboxController(0);
     	
     	xbox.A.whenPressed(new InstantAction() {
@@ -38,7 +38,7 @@ public class Robot extends IterativeFRCRobot {
 			protected void execute() {
 				shouldrec = !shouldrec;
     			if(shouldrec)
-    				rec.record();
+    				rec.record("Snoooopy");
     			else
     				rec.stop();
 			}
@@ -47,7 +47,7 @@ public class Robot extends IterativeFRCRobot {
     	xbox.X.whenPressed(new InstantAction() {
 			@Override
 			protected void execute() {
-    			player.play();
+    			player.play("jake");
     		}
 		});
     }
