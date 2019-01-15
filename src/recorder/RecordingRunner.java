@@ -1,6 +1,7 @@
 package recorder;
 
 import java.io.File;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
 public class RecordingRunner {
@@ -21,7 +22,9 @@ public class RecordingRunner {
     }
     
     public RecordingRunner(int periodMs, Recorder... recorders) {
-    	this(null,new Executor(),periodMs,recorders);
+    	this(Logger.getLogger("Console.logger"),new Executor(),periodMs,recorders);
+    	ConsoleHandler handler = new ConsoleHandler();
+    	mLogger.addHandler(handler);
     }
     
     public RecordingRunner(Logger logger,int periodMs, Recorder... recorders) {
@@ -31,7 +34,9 @@ public class RecordingRunner {
     public RecordingRunner(Executor executor,int periodMs, Recorder... recorders) {
     	this(null,executor,periodMs,recorders);
     }
-
+    /**
+     * @param outputFolder - filename should not include the ".rec"
+     */
     public void record(File outputFolder) {
     	if(RecordUtil.checkDir(outputFolder) && isFinished()) {
     		for(Recorder recorder : mRecorders) {

@@ -1,10 +1,11 @@
 package recorder;
 
 import java.io.File;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
 public class PlayingRunner{	
-	private static Executor mExecutor;
+	private Executor mExecutor;
 	private Logger mLogger;
 	
 	private Player[] mPlayers;
@@ -25,8 +26,10 @@ public class PlayingRunner{
         mExecutor = executor;
     }
     
-    public PlayingRunner(int period, Player... players) {    
-        this(null,new Executor(),period,players);
+    public PlayingRunner(int periodMs, Player... players) {    
+    	this(Logger.getLogger("Console.logger"),new Executor(),periodMs,players);
+    	ConsoleHandler handler = new ConsoleHandler();
+    	mLogger.addHandler(handler);
     }
     
     public PlayingRunner(Logger logger, int period, Player... players) {    
@@ -36,7 +39,9 @@ public class PlayingRunner{
     public PlayingRunner(Executor executor,int period, Player... players) {    
         this(null,executor,period,players);
     }
-
+    /**
+     * @param outputFolder - filename should not include the ".rec"
+     */
     public void play(File inputFolder) {
     	if(RecordUtil.checkDir(inputFolder) && isFinished()) {
     		for (Player actor : mPlayers) {
@@ -52,7 +57,7 @@ public class PlayingRunner{
     	return mExecutor.isFinished();
     }
     
-    public static void stop() {
+    public void stop() {
     	mExecutor.stop();
     }
 }

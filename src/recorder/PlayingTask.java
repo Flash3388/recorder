@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PlayingTask implements Runnable {
@@ -36,11 +37,7 @@ public class PlayingTask implements Runnable {
                     Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
                     startTime = FlashUtil.millisInt();
                 } catch (InterruptedException e) {
-                	if(mLogger.equals(null))
-                		System.out.println(e.toString());
-                	else
-                		mLogger.warning(e.toString());   
-                    break;
+                	mLogger.log(Level.ALL,e.toString(),e);
                 }
             }
         }
@@ -54,11 +51,7 @@ public class PlayingTask implements Runnable {
             	frames.add(new Frame(line));
             }
         } catch (IOException e) {
-        	if(mLogger.equals(null))
-        		System.out.println(e.toString());
-        	else
-        		mLogger.warning(e.toString());   
-        	PlayingRunner.stop();
+        	mLogger.log(Level.ALL,e.toString(),e);  
         	return null;
         }
         return frames;

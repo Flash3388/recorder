@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3388.robot;
 
+import java.io.File;
+
 import org.usfirst.frc.team3388.robot.subsystems.DriveSystem;
 
 import edu.flash3388.flashlib.robot.InstantAction;
@@ -38,7 +40,7 @@ public class Robot extends IterativeFRCRobot {
 			protected void execute() {
 				shouldrec = !shouldrec;
     			if(shouldrec)
-    				rec.record("Snoooopy");
+    				rec.record(new File("Example"));
     			else
     				rec.stop();
 			}
@@ -47,7 +49,7 @@ public class Robot extends IterativeFRCRobot {
     	xbox.X.whenPressed(new InstantAction() {
 			@Override
 			protected void execute() {
-    			player.play("jake");
+    			player.play(new File("Example"));
     		}
 		});
     }

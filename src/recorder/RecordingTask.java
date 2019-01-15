@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RecordingTask implements Runnable {
@@ -57,10 +58,7 @@ public class RecordingTask implements Runnable {
                 writer.close();
             }
         } catch (IOException e) {
-        	if(mLogger.equals(null))
-        		System.out.println(e.toString());
-        	else
-        		mLogger.warning(e.toString());
+        	mLogger.log(Level.ALL,e.toString(),e);
         	File file = new File(path);
         	file.delete();
         }
