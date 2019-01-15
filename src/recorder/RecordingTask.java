@@ -58,7 +58,7 @@ public class RecordingTask implements Runnable {
                 writer.close();
             }
         } catch (IOException e) {
-        	mLogger.log(Level.ALL,e.toString(),e);
+        	mLogger.log(Level.SEVERE,String.format("Error while saving frames in %s",path),e);
         	File file = new File(path);
         	file.delete();
         }

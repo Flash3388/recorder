@@ -38,7 +38,7 @@ public class RecordingRunner {
      * @param outputFolder - filename should not include the ".rec"
      */
     public void record(File outputFolder) {
-    	if(RecordUtil.checkDir(outputFolder) && isFinished()) {
+    	if(RecordUtil.ensureIsDirectory(outputFolder) && isFinished()) {
     		for(Recorder recorder : mRecorders) {
                 String path = String.format("%s%s.rec", outputFolder.getPath(),recorder.getName());
                 RecordingTask scriptWriter = new RecordingTask(recorder, path, mPeriodMs, mLogger);

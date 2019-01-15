@@ -40,10 +40,10 @@ public class PlayingRunner{
         this(null,executor,period,players);
     }
     /**
-     * @param outputFolder - filename should not include the ".rec"
+     * @param inputFolder - filename should not include the ".rec"
      */
     public void play(File inputFolder) {
-    	if(RecordUtil.checkDir(inputFolder) && isFinished()) {
+    	if(RecordUtil.ensureIsDirectory(inputFolder) && isFinished()) {
     		for (Player actor : mPlayers) {
                 String path = String.format("%s%s.rec", inputFolder.getPath(),actor.getName());
                 PlayingTask scriptReader = new PlayingTask(actor, path, mPeriodMs, mLogger);

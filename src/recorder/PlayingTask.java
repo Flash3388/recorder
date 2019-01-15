@@ -37,7 +37,7 @@ public class PlayingTask implements Runnable {
                     Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
                     startTime = FlashUtil.millisInt();
                 } catch (InterruptedException e) {
-                	mLogger.log(Level.ALL,e.toString(),e);
+                	mLogger.log(Level.WARNING,"The Playing thread got interrupted",e);
                 }
             }
         }
@@ -51,7 +51,7 @@ public class PlayingTask implements Runnable {
             	frames.add(new Frame(line));
             }
         } catch (IOException e) {
-        	mLogger.log(Level.ALL,e.toString(),e);  
+        	mLogger.log(Level.SEVERE,String.format("Error accured while reading frames from %s", path),e);  
         	return null;
         }
         return frames;
