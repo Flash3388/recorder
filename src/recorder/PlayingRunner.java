@@ -1,7 +1,6 @@
 package recorder;
 
 import java.io.File;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
 public class PlayingRunner{	
@@ -25,20 +24,6 @@ public class PlayingRunner{
         mLogger = logger;
         mExecutor = executor;
     }
-    
-    public PlayingRunner(int periodMs, Player... players) {    
-    	this(Logger.getLogger("Console.logger"),new Executor(),periodMs,players);
-    	ConsoleHandler handler = new ConsoleHandler();
-    	mLogger.addHandler(handler);
-    }
-    
-    public PlayingRunner(Logger logger, int period, Player... players) {    
-        this(logger,new Executor(),period,players);
-    }
-    
-    public PlayingRunner(Executor executor,int period, Player... players) {    
-        this(null,executor,period,players);
-    }
     /**
      * @param inputFolder - filename should not include the ".rec"
      */
@@ -49,7 +34,6 @@ public class PlayingRunner{
                 PlayingTask scriptReader = new PlayingTask(actor, path, mPeriodMs, mLogger);
                 mExecutor.submit(scriptReader);
             }
-    		mExecutor.stop();
     	}
     }
     

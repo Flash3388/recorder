@@ -31,8 +31,8 @@ public class Robot extends IterativeFRCRobot {
     	RobotFactory.setHIDInterface(new FRCHIDInterface(DriverStation.getInstance()));
     	
     	drive = new DriveSystem(7,3,6,1);
-    	rec = new RecordingRunner(10,drive);
-    	player = new PlayingRunner(10,drive);
+    //	rec = new RecordingRunner(10,drive);
+    //	player = new PlayingRunner(10,drive);
     	xbox = new XboxController(0);
     	
     	xbox.A.whenPressed(new InstantAction() {

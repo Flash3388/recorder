@@ -7,6 +7,6 @@ class RecordUtil {
     	if(folder.exists() && folder.isDirectory())
     			return true;
     	else
-    		throw new IllegalAccessError("The entered directory does not exist");
+    		throw new IllegalArgumentException("The entered directory does not exist");
     }
 }
