@@ -3,15 +3,10 @@ package recorder;
 import java.io.File;
 
 class RecordUtil {
-	public static boolean isDir(String folderPath) {
-    	File folder = new File(folderPath);
-    	
-    	if(folder.exists()) {
-    		if(folder.isDirectory())
+	public static boolean checkDir(File folder) {    	
+    	if(folder.exists() && folder.isDirectory())
     			return true;
-    		else
-    			throw new IllegalArgumentException("The entered directory is not a directory");
-    	} else
+    	else
     		throw new IllegalAccessError("The entered directory does not exist");
     }
 }

@@ -1,5 +1,6 @@
 package recorder;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 public class RecordingRunner {
@@ -9,10 +10,10 @@ public class RecordingRunner {
     
     private int mPeriodMs;
     
-    public RecordingRunner(Logger logger, int periodMs, Recorder... recorders) {
+    public RecordingRunner(Logger logger, Executor executor, int periodMs, Recorder... recorders) {
     	if(periodMs <= 0 )
     		throw new IllegalArgumentException();        
-    	mExecutor = new Executor();
+    	mExecutor = executor;
     	
     	mRecorders = recorders;
     	mPeriodMs = periodMs;
@@ -20,13 +21,21 @@ public class RecordingRunner {
     }
     
     public RecordingRunner(int periodMs, Recorder... recorders) {
-    	this(null,periodMs,recorders);
+    	this(null,new Executor(),periodMs,recorders);
+    }
+    
+    public RecordingRunner(Logger logger,int periodMs, Recorder... recorders) {
+    	this(logger,new Executor(),periodMs,recorders);
+    }
+    
+    public RecordingRunner(Executor executor,int periodMs, Recorder... recorders) {
+    	this(null,executor,periodMs,recorders);
     }
 
-    public void record(String outputFolderPath) {
-    	if(RecordUtil.isDir(outputFolderPath) && isFinished()) {
+    public void record(File outputFolder) {
+    	if(RecordUtil.checkDir(outputFolder) && isFinished()) {
     		for(Recorder recorder : mRecorders) {
-                String path = String.format("%s%s.rec", outputFolderPath,recorder.getName());
+                String path = String.format("%s%s.rec", outputFolder.getPath(),recorder.getName());
                 RecordingTask scriptWriter = new RecordingTask(recorder, path, mPeriodMs, mLogger);
                 mExecutor.submit(scriptWriter);
             }

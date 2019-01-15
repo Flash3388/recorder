@@ -36,7 +36,10 @@ public class PlayingTask implements Runnable {
                     Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
                     startTime = FlashUtil.millisInt();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                	if(mLogger.equals(null))
+                		System.out.println(e.toString());
+                	else
+                		mLogger.warning(e.toString());   
                     break;
                 }
             }
