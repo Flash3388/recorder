@@ -23,13 +23,12 @@ public class RecordingRunner {
      * @param outputFolder - filename should not include the ".rec"
      */
     public void record(File outputFolder) {
-    	if(RecordUtil.ensureIsDirectory(outputFolder) && isFinished()) {
-    		for(Recorder recorder : mRecorders) {
-                String path = String.format("%s%s.rec", outputFolder.getPath(),recorder.getName());
-                RecordingTask scriptWriter = new RecordingTask(recorder, path, mPeriodMs, mLogger);
-                mExecutor.submit(scriptWriter);
-            }
-    	}
+    	RecordUtil.ensureIsDirectory(outputFolder);
+		for(Recorder recorder : mRecorders) {
+            String path = String.format("%s%s.rec", outputFolder.getPath(),recorder.getName());
+            RecordingTask scriptWriter = new RecordingTask(recorder, path, mPeriodMs, mLogger);
+            mExecutor.submit(scriptWriter);
+        }
     }
     
     public boolean isFinished() {

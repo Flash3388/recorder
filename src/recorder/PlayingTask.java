@@ -3,7 +3,6 @@ package recorder;
 import edu.flash3388.flashlib.util.FlashUtil;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -27,38 +26,35 @@ public class PlayingTask implements Runnable {
 
     @Override
     public void run() {
-    	Queue<Frame> frames = null;
-        long startTime = FlashUtil.millisInt();
-        
-        try {
-			frames = loadFrames(mInputPath);
-		} catch (IOException e) {
-        	mLogger.log(Level.SEVERE,String.format("Error accured while reading frames from %s", mPlayer.getName()),e);  
-        }
-        
-        if(frames != null) {
-        	for(Frame frame : frames) {
-            	mPlayer.play(frame);
+    	try {
+    		Queue<Frame> frames = loadFrames(mInputPath);
+            long startTime = FlashUtil.millisInt();
+            
+            if(frames != null) {
+            	for(Frame frame : frames) {
+                	mPlayer.play(frame);
 
-                try {
-                    Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
-                    startTime = FlashUtil.millisInt();
-                } catch (InterruptedException e) {
-                	mLogger.log(Level.WARNING,"The Playing thread got interrupted",e);
+                    try {
+                        Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
+                        startTime = FlashUtil.millisInt();
+                    } catch (InterruptedException e) {
+                    	mLogger.log(Level.WARNING,"The Playing thread got interrupted",e);
+                    }
                 }
             }
-        }
+    	} catch (IOException e) {
+        	mLogger.log(Level.SEVERE,String.format("Error accured while reading frames from %s", mInputPath),e);  
+    	}
     }
 
-    private Queue<Frame> loadFrames(String path) throws FileNotFoundException, IOException {
+    private Queue<Frame> loadFrames(String path) throws IOException {
         Queue<Frame> frames = new ArrayDeque<Frame>();
         
         try(BufferedReader file = new BufferedReader(new FileReader(path))) {
         	for(String line = file.readLine(); line != null; line = file.readLine()) {
             	frames.add(new Frame(line));
             }
-        }
-        
+        }     
         return frames;
     }
 }
