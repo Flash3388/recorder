@@ -38,7 +38,7 @@ public class Executor {
     }
     
     public void shutdown() {
-    	stop();
     	mExecutorService.shutdown();
+    	stop();
     }
 }

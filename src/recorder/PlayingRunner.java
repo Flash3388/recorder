@@ -29,7 +29,6 @@ public class PlayingRunner{
      */
     public void play(File inputFolder) {
     	RecordUtil.ensureIsDirectory(inputFolder);
-    	//if(isFinished()) same here
     		for (Player actor : mPlayers) {
                 String path = String.format("%s/%s.rec", inputFolder.getPath(),actor.getName());
                 PlayingTask scriptReader = new PlayingTask(actor, path, mPeriodMs, mLogger);
