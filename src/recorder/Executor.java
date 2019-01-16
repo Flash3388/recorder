@@ -36,5 +36,9 @@ public class Executor {
         }
         mFutures.clear();
     }
-
+    
+    public void shutdown() {
+    	stop();
+    	mExecutorService.shutdown();
+    }
 }
