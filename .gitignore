@@ -1,9 +1,0 @@
-bin/
-build/
-dist/
-.idea/
-.classpath
-.project
-*.iml
-build.xml
-build.properties
