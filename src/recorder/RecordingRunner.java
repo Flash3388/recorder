@@ -24,8 +24,9 @@ public class RecordingRunner {
      */
     public void record(File outputFolder) {
     	RecordUtil.ensureIsDirectory(outputFolder);
+    	//if(isFinished()) - should I do that? had it before, but now I think that it's not that necessary.
 		for(Recorder recorder : mRecorders) {
-            String path = String.format("%s%s.rec", outputFolder.getPath(),recorder.getName());
+            String path = String.format("%s/%s.rec", outputFolder.getPath(),recorder.getName());
             RecordingTask scriptWriter = new RecordingTask(recorder, path, mPeriodMs, mLogger);
             mExecutor.submit(scriptWriter);
         }

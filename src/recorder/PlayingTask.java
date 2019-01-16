@@ -30,18 +30,13 @@ public class PlayingTask implements Runnable {
     		Queue<Frame> frames = loadFrames(mInputPath);
             long startTime = FlashUtil.millisInt();
             
-            if(frames != null) {
-            	for(Frame frame : frames) {
-                	mPlayer.play(frame);
-
-                    try {
-                        Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
-                        startTime = FlashUtil.millisInt();
-                    } catch (InterruptedException e) {
-                    	mLogger.log(Level.WARNING,"The Playing thread got interrupted",e);
-                    }
-                }
-            }
+        	for(Frame frame : frames) {
+            	mPlayer.play(frame);
+                    Thread.sleep(mPeriodMs - (startTime - FlashUtil.millisInt()));
+                    startTime = FlashUtil.millisInt();
+            } 	
+        } catch (InterruptedException e) {
+        	mLogger.log(Level.WARNING,"The Playing thread got interrupted",e);
     	} catch (IOException e) {
         	mLogger.log(Level.SEVERE,String.format("Error accured while reading frames from %s", mInputPath),e);  
     	}
